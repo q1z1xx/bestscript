@@ -17,13 +17,14 @@ local bgDark = Color3.fromRGB(12, 12, 14)
 local panelDark = Color3.fromRGB(18, 18, 20)
 local textWhite = Color3.fromRGB(255, 255, 255)
 local textGray = Color3.fromRGB(150, 150, 150)
+local linkColor = Color3.fromRGB(100, 150, 255) -- Синий цвет как у спиннера
 
 local ToggleBtnMain = Instance.new("TextButton")
 ToggleBtnMain.Size = UDim2.new(0, 50, 0, 50)
 ToggleBtnMain.Position = UDim2.new(0, 20, 0.5, -25)
 ToggleBtnMain.BackgroundColor3 = bgDark
 ToggleBtnMain.Text = "⚡"
-ToggleBtnMain.TextColor3 = Color3.fromRGB(50, 150, 255)
+ToggleBtnMain.TextColor3 = linkColor
 ToggleBtnMain.TextSize = 28
 ToggleBtnMain.ZIndex = 10
 ToggleBtnMain.Parent = ScreenGui
@@ -73,9 +74,24 @@ MainFrame.Parent = Container
 Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 15)
 MakeDraggable(MainFrame)
 
+-- Новая ссылка слева
+local LinkLabel = Instance.new("TextLabel")
+LinkLabel.Parent = MainFrame
+LinkLabel.Position = UDim2.new(0, 20, 0, 20) -- Слева
+LinkLabel.Size = UDim2.new(0, 160, 0, 40) -- Фиксированная ширина для ссылки
+LinkLabel.BackgroundTransparency = 1
+LinkLabel.Text = "t.me/bestscriptfree"
+LinkLabel.TextColor3 = linkColor
+LinkLabel.TextSize = 14
+LinkLabel.Font = Enum.Font.GothamBold
+LinkLabel.TextXAlignment = Enum.TextXAlignment.Left
+LinkLabel.ZIndex = 2
+
+-- Заголовок (сдвинут вправо)
 local TitleLabel = Instance.new("TextLabel")
-TitleLabel.Size = UDim2.new(1, -40, 0, 40)
-TitleLabel.Position = UDim2.new(0, 20, 0, 20)
+TitleLabel.Parent = MainFrame
+TitleLabel.Position = UDim2.new(0, 20 + 160, 0, 20) -- Сдвиг вправо на ширину ссылки
+TitleLabel.Size = UDim2.new(1, -40 - 160, 0, 40) -- Уменьшенная ширина
 TitleLabel.BackgroundTransparency = 1
 TitleLabel.Text = "XIVI HUB"
 TitleLabel.TextColor3 = textWhite
@@ -83,7 +99,6 @@ TitleLabel.TextSize = 32
 TitleLabel.Font = Enum.Font.GothamBold
 TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
 TitleLabel.ZIndex = 2
-TitleLabel.Parent = MainFrame
 
 local SubTitle = Instance.new("TextLabel")
 SubTitle.Size = UDim2.new(1, -40, 0, 20)
@@ -175,7 +190,7 @@ Spinner.Size = UDim2.new(0, 50, 0, 50)
 Spinner.Position = UDim2.new(0.5, -25, 0, 100)
 Spinner.BackgroundTransparency = 1
 Spinner.Image = "rbxassetid://3602422090"
-Spinner.ImageColor3 = Color3.fromRGB(100, 150, 255)
+Spinner.ImageColor3 = linkColor
 Spinner.ZIndex = 21
 Spinner.Parent = Overlay
 
@@ -186,7 +201,7 @@ ActTitle.Size = UDim2.new(1, 0, 0, 40)
 ActTitle.Position = UDim2.new(0, 0, 0, 180)
 ActTitle.BackgroundTransparency = 1
 ActTitle.Text = "Обходим..."
-ActTitle.TextColor3 = Color3.fromRGB(100, 150, 255)
+ActTitle.TextColor3 = linkColor
 ActTitle.TextSize = 26
 ActTitle.Font = Enum.Font.GothamBold
 ActTitle.ZIndex = 21
@@ -214,7 +229,7 @@ Instance.new("UICorner", ProgressBarBg).CornerRadius = UDim.new(1, 0)
 
 local ProgressBarFill = Instance.new("Frame")
 ProgressBarFill.Size = UDim2.new(0, 0, 1, 0)
-ProgressBarFill.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
+ProgressBarFill.BackgroundColor3 = linkColor
 ProgressBarFill.ZIndex = 22
 ProgressBarFill.Parent = ProgressBarBg
 Instance.new("UICorner", ProgressBarFill).CornerRadius = UDim.new(1, 0)
