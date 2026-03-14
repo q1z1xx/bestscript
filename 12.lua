@@ -5,14 +5,13 @@ local CoreGui = game:GetService("CoreGui")
 
 local player = Players.LocalPlayer or Players.PlayerAdded:Wait()
 
--- 1. УНИВЕРСАЛЬНЫЙ ПОИСК ПАПКИ (Для инжекта)
 local guiParent
 pcall(function() guiParent = (gethui and gethui()) or CoreGui end)
 if not guiParent then
     guiParent = player:WaitForChild("PlayerGui")
 end
 
-local guiName = "SATURNHUB_V3_PURPLE" 
+local guiName = "SATURNHUB_V3_MINI" 
 if guiParent:FindFirstChild(guiName) then
     guiParent[guiName]:Destroy()
 end
@@ -23,22 +22,20 @@ ScreenGui.ResetOnSpawn = false
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 ScreenGui.Parent = guiParent
 
--- 2. ФИОЛЕТОВО-СИНЯЯ ТЕМА (Saturn Theme)
 local Theme = {
-    Base = Color3.fromRGB(15, 12, 28),         -- Темный фиолетово-синий фон
-    ElementBg = Color3.fromRGB(28, 24, 45),    -- Цвет кнопок
-    Accent = Color3.fromRGB(130, 90, 255),     -- Неоновый фиолетовый акцент
+    Base = Color3.fromRGB(15, 12, 28),
+    ElementBg = Color3.fromRGB(28, 24, 45),
+    Accent = Color3.fromRGB(130, 90, 255),
     TextMain = Color3.fromRGB(250, 250, 255),
     TextGray = Color3.fromRGB(160, 160, 180),
     Border = Color3.fromRGB(50, 45, 85),
     FontTitle = Enum.Font.GothamBlack,
     FontMain = Enum.Font.GothamMedium,
     CornerRadius = UDim.new(0, 10),
-    MainTransparency = 0.25, -- Главное меню прозрачное
-    SubTransparency = 0      -- Подменю ПЛОТНОЕ (0 прозрачности)
+    MainTransparency = 0.25,
+    SubTransparency = 0
 }
 
--- 3. КНОПКА ОТКРЫТИЯ (🪐)
 local OpenButton = Instance.new("TextButton")
 OpenButton.Size = UDim2.new(0, 50, 0, 50)
 OpenButton.Position = UDim2.new(0, 20, 0.5, -25) 
@@ -54,9 +51,8 @@ local buttonStroke = Instance.new("UIStroke", OpenButton)
 buttonStroke.Color = Theme.Accent
 buttonStroke.Thickness = 1.5
 
--- 4. ГЛАВНЫЙ КОНТЕЙНЕР
 local Container = Instance.new("Frame")
-Container.Size = UDim2.new(0, 420, 0, 550) -- Увеличил высоту для аватарки
+Container.Size = UDim2.new(0, 420, 0, 550)
 Container.Position = UDim2.new(0.5, -210, 0.5, -275)
 Container.BackgroundTransparency = 1
 Container.Visible = false
@@ -92,7 +88,6 @@ local function MakeDraggable(frame)
     end)
 end
 
--- --- ГЛАВНОЕ ОКНО (Прозрачное) ---
 local MainFrame = Instance.new("Frame")
 MainFrame.Size = UDim2.new(1, 0, 1, 0)
 MainFrame.BackgroundColor3 = Theme.Base
@@ -105,7 +100,6 @@ mainStroke.Color = Theme.Border
 mainStroke.Thickness = 1
 MakeDraggable(MainFrame)
 
--- Заголовок
 local TitleLabel = Instance.new("TextLabel")
 TitleLabel.Size = UDim2.new(1, -40, 0, 40)
 TitleLabel.Position = UDim2.new(0, 20, 0, 15)
@@ -118,7 +112,6 @@ TitleLabel.TextXAlignment = Enum.TextXAlignment.Center
 TitleLabel.ZIndex = 2
 TitleLabel.Parent = MainFrame
 
--- Подзаголовок
 local SubTitle = Instance.new("TextLabel")
 SubTitle.Size = UDim2.new(1, -40, 0, 15)
 SubTitle.Position = UDim2.new(0, 20, 0, 55)
@@ -131,10 +124,9 @@ SubTitle.TextXAlignment = Enum.TextXAlignment.Center
 SubTitle.ZIndex = 2
 SubTitle.Parent = MainFrame
 
--- Ссылка снизу
 local BottomLink = Instance.new("TextLabel")
 BottomLink.Size = UDim2.new(1, 0, 0, 20)
-BottomLink.Position = UDim2.new(0, 0, 1, -100) -- Подняли выше над аватаркой
+BottomLink.Position = UDim2.new(0, 0, 1, -100)
 BottomLink.BackgroundTransparency = 1
 BottomLink.Text = "T.ME/SABSCRIPTER" 
 BottomLink.TextColor3 = Theme.TextGray 
@@ -144,7 +136,6 @@ BottomLink.TextXAlignment = Enum.TextXAlignment.Center
 BottomLink.ZIndex = 2
 BottomLink.Parent = MainFrame
 
--- --- КАРТОЧКА ПРОФИЛЯ ПОЛЬЗОВАТЕЛЯ (В самом низу) ---
 local UserCard = Instance.new("Frame")
 UserCard.Size = UDim2.new(1, -40, 0, 55)
 UserCard.Position = UDim2.new(0, 20, 1, -75)
@@ -188,9 +179,8 @@ UserRole.TextXAlignment = Enum.TextXAlignment.Left
 UserRole.ZIndex = 3
 UserRole.Parent = UserCard
 
--- --- СПИСОК СКРИПТОВ ---
 local ScrollFrame = Instance.new("ScrollingFrame")
-ScrollFrame.Size = UDim2.new(1, -40, 1, -195) -- Место под ссылку и профиль
+ScrollFrame.Size = UDim2.new(1, -40, 1, -195) 
 ScrollFrame.Position = UDim2.new(0, 20, 0, 85)
 ScrollFrame.BackgroundTransparency = 1
 ScrollFrame.ScrollBarThickness = 2
@@ -206,11 +196,10 @@ UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
     ScrollFrame.CanvasSize = UDim2.new(0, 0, 0, UIListLayout.AbsoluteContentSize.Y + 10)
 end)
 
--- --- ПОДМЕНЮ (ПЛОТНОЕ, БЕЗ ПРОЗРАЧНОСТИ) ---
 local SubMenuFrame = Instance.new("Frame")
 SubMenuFrame.Size = UDim2.new(1, 0, 1, 0)
 SubMenuFrame.BackgroundColor3 = Theme.Base
-SubMenuFrame.BackgroundTransparency = Theme.SubTransparency -- 0 Прозрачности!
+SubMenuFrame.BackgroundTransparency = Theme.SubTransparency
 SubMenuFrame.Visible = false
 SubMenuFrame.ZIndex = 1
 SubMenuFrame.Parent = Container
@@ -235,7 +224,7 @@ local SubMenuTitle = Instance.new("TextLabel")
 SubMenuTitle.Size = UDim2.new(1, -80, 0, 30)
 SubMenuTitle.Position = UDim2.new(0, 60, 0, 20)
 SubMenuTitle.BackgroundTransparency = 1
-SubMenuTitle.Text = "" -- Пустой по умолчанию, чтобы не было "Label"
+SubMenuTitle.Text = "" 
 SubMenuTitle.TextColor3 = Theme.TextMain
 SubMenuTitle.TextSize = 22
 SubMenuTitle.Font = Theme.FontTitle
@@ -243,7 +232,6 @@ SubMenuTitle.TextXAlignment = Enum.TextXAlignment.Left
 SubMenuTitle.ZIndex = 2
 SubMenuTitle.Parent = SubMenuFrame
 
--- Скролл для подменю (чтобы функции не пропадали)
 local SubMenuContent = Instance.new("ScrollingFrame")
 SubMenuContent.Size = UDim2.new(1, -40, 1, -80)
 SubMenuContent.Position = UDim2.new(0, 20, 0, 70)
@@ -266,7 +254,6 @@ BackBtn.MouseButton1Click:Connect(function()
     MainFrame.Visible = true
 end)
 
--- --- ОКНО АКТИВАЦИИ (Bypass) ---
 local Overlay = Instance.new("Frame")
 Overlay.Size = UDim2.new(1, 0, 1, 0)
 Overlay.BackgroundColor3 = Theme.Base
@@ -345,7 +332,6 @@ local function ShowBypass(callback)
     end)
 end
 
--- --- ЛОГИКА СОЗДАНИЯ ЭЛЕМЕНТОВ ---
 local function ClearSubMenu()
     for _, child in pairs(SubMenuContent:GetChildren()) do
         if child:IsA("Frame") or child:IsA("TextButton") then child:Destroy() end
@@ -408,128 +394,12 @@ local function CreateToggle(parent, text)
     end)
 end
 
-local function CreateSingleButton(parent, text)
-    local Btn = Instance.new("TextButton")
-    Btn.Size = UDim2.new(1, 0, 0, 40)
-    Btn.BackgroundColor3 = Theme.TextMain
-    Btn.Text = text
-    Btn.TextColor3 = Theme.Base
-    Btn.TextSize = 12
-    Btn.Font = Theme.FontTitle
-    Btn.ZIndex = 3
-    Btn.Parent = parent
-    Instance.new("UICorner", Btn).CornerRadius = UDim.new(0, 8)
-end
-
-local function CreateDualButtons(parent, text1, text2)
-    local ContainerFrame = Instance.new("Frame")
-    ContainerFrame.Size = UDim2.new(1, 0, 0, 40)
-    ContainerFrame.BackgroundTransparency = 1
-    ContainerFrame.ZIndex = 3
-    ContainerFrame.Parent = parent
-
-    local Btn1 = Instance.new("TextButton")
-    Btn1.Size = UDim2.new(0.48, 0, 1, 0)
-    Btn1.BackgroundColor3 = Theme.TextMain
-    Btn1.Text = text1
-    Btn1.TextColor3 = Theme.Base
-    Btn1.TextSize = 12
-    Btn1.Font = Theme.FontTitle
-    Btn1.ZIndex = 4
-    Btn1.Parent = ContainerFrame
-    Instance.new("UICorner", Btn1).CornerRadius = UDim.new(0, 8)
-
-    local Btn2 = Instance.new("TextButton")
-    Btn2.Size = UDim2.new(0.48, 0, 1, 0)
-    Btn2.Position = UDim2.new(0.52, 0, 0, 0)
-    Btn2.BackgroundColor3 = Theme.TextMain
-    Btn2.Text = text2
-    Btn2.TextColor3 = Theme.Base
-    Btn2.TextSize = 12
-    Btn2.Font = Theme.FontTitle
-    Btn2.ZIndex = 4
-    Btn2.Parent = ContainerFrame
-    Instance.new("UICorner", Btn2).CornerRadius = UDim.new(0, 8)
-end
-
-local function CreateSlider(parent, text)
-    local Panel = Instance.new("Frame")
-    Panel.Size = UDim2.new(1, 0, 0, 60)
-    Panel.BackgroundColor3 = Theme.ElementBg
-    Panel.ZIndex = 3
-    Panel.Parent = parent
-    Instance.new("UICorner", Panel).CornerRadius = UDim.new(0, 8)
-    local panelStroke = Instance.new("UIStroke", Panel)
-    panelStroke.Color = Theme.Border
-
-    local Lbl = Instance.new("TextLabel")
-    Lbl.Size = UDim2.new(0, 200, 0, 30)
-    Lbl.Position = UDim2.new(0, 15, 0, 5)
-    Lbl.BackgroundTransparency = 1
-    Lbl.Text = text
-    Lbl.TextColor3 = Theme.TextGray
-    Lbl.TextSize = 13
-    Lbl.Font = Theme.FontMain
-    Lbl.TextXAlignment = Enum.TextXAlignment.Left
-    Lbl.ZIndex = 4
-    Lbl.Parent = Panel
-
-    local SliderBg = Instance.new("TextButton")
-    SliderBg.Size = UDim2.new(1, -30, 0, 4)
-    SliderBg.Position = UDim2.new(0, 15, 0, 40)
-    SliderBg.BackgroundColor3 = Color3.fromRGB(35, 30, 50)
-    SliderBg.Text = ""
-    SliderBg.AutoButtonColor = false
-    SliderBg.ZIndex = 4
-    SliderBg.Parent = Panel
-    Instance.new("UICorner", SliderBg).CornerRadius = UDim.new(1, 0)
-
-    local SliderFill = Instance.new("Frame")
-    SliderFill.Size = UDim2.new(0.5, 0, 1, 0)
-    SliderFill.BackgroundColor3 = Theme.TextMain
-    SliderFill.ZIndex = 5
-    SliderFill.Parent = SliderBg
-    Instance.new("UICorner", SliderFill).CornerRadius = UDim.new(1, 0)
-
-    local Knob = Instance.new("Frame")
-    Knob.Size = UDim2.new(0, 14, 0, 14)
-    Knob.Position = UDim2.new(1, -7, 0.5, -7)
-    Knob.BackgroundColor3 = Theme.TextMain
-    Knob.ZIndex = 6
-    Knob.Parent = SliderFill
-    Instance.new("UICorner", Knob).CornerRadius = UDim.new(1, 0)
-
-    local dragging = false
-    local function updateSlider(input)
-        local pos = math.clamp((input.Position.X - SliderBg.AbsolutePosition.X) / SliderBg.AbsoluteSize.X, 0, 1)
-        SliderFill.Size = UDim2.new(pos, 0, 1, 0)
-    end
-    SliderBg.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-            dragging = true; updateSlider(input)
-        end
-    end)
-    UserInputService.InputEnded:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then dragging = false end
-    end)
-    UserInputService.InputChanged:Connect(function(input)
-        if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then updateSlider(input) end
-    end)
-end
-
--- --- ДАННЫЕ МЕНЮ И СБОРКА ---
 local menuData = {
     ["FREEZE DUEL"] = { {type="toggle", text="ВКЛЮЧИТЬ"} },
-    ["FREEZE TRADE"] = { {type="toggle", text="ВКЛЮЧИТЬ"} },
-    ["SEMI TP"] = { {type="toggle", text="ВКЛЮЧИТЬ (Bypass)"}, {type="dual_btn", text1="LEFT TP", text2="RIGHT TP"} },
-    ["FLASH TP"] = { {type="toggle", text="ВКЛЮЧИТЬ (Bypass)"}, {type="single_btn", text="TP AND INSTANT GRAB"} },
-    ["DESYNC"] = { {type="toggle", text="ВКЛЮЧИТЬ"} },
-    ["INSTANT STEAL"] = { {type="toggle", text="ВКЛЮЧИТЬ"} },
-    ["TP BLOCK"] = { {type="toggle", text="ВКЛЮЧИТЬ"}, {type="toggle", text="БАНИТЬ (ДА/НЕТ)"} },
-    ["BEST AUTOGRAB"] = { {type="toggle", text="ВКЛЮЧИТЬ"}, {type="slider", text="СКОРОСТЬ"} }
+    ["FREEZE TRADE"] = { {type="toggle", text="ВКЛЮЧИТЬ"} }
 }
 
-local orderedMenus = {"FREEZE DUEL", "FREEZE TRADE", "SEMI TP", "FLASH TP", "DESYNC", "INSTANT STEAL", "TP BLOCK", "BEST AUTOGRAB"}
+local orderedMenus = {"FREEZE DUEL", "FREEZE TRADE"}
 
 for _, name in ipairs(orderedMenus) do
     local Btn = Instance.new("TextButton")
@@ -537,7 +407,7 @@ for _, name in ipairs(orderedMenus) do
     Btn.BackgroundColor3 = Theme.ElementBg
     Btn.BackgroundTransparency = 0.2
     Btn.Text = ""
- Btn.ZIndex = 3
+    Btn.ZIndex = 3
     Btn.Parent = ScrollFrame
     Instance.new("UICorner", Btn).CornerRadius = Theme.CornerRadius
     Instance.new("UIStroke", Btn).Color = Theme.Border
@@ -572,11 +442,7 @@ for _, name in ipairs(orderedMenus) do
         local data = menuData[name]
         if data then
             for _, item in ipairs(data) do
-                if item.type == "toggle" then CreateToggle(SubMenuContent, item.text)
-                elseif item.type == "single_btn" then CreateSingleButton(SubMenuContent, item.text)
-                elseif item.type == "dual_btn" then CreateDualButtons(SubMenuContent, item.text1, item.text2)
-                elseif item.type == "slider" then CreateSlider(SubMenuContent, item.text)
-                end
+                if item.type == "toggle" then CreateToggle(SubMenuContent, item.text) end
             end
         end
 
